@@ -3,12 +3,12 @@ import { cn } from "@/lib/utils";
 import { format } from "date-fns";
 
 interface ChatMessageProps {
-  message: string;
+  text: string;  // Changed from 'message' to 'text' to match the data structure
   isAi: boolean;
   timestamp: Date;
 }
 
-export const ChatMessage = ({ message, isAi, timestamp }: ChatMessageProps) => {
+export const ChatMessage = ({ text, isAi, timestamp }: ChatMessageProps) => {
   return (
     <div
       className={cn(
@@ -24,7 +24,7 @@ export const ChatMessage = ({ message, isAi, timestamp }: ChatMessageProps) => {
             : "bg-chat-bubble border border-white/20"
         )}
       >
-        <p className="text-sm text-gray-800">{message}</p>
+        <p className="text-sm text-gray-800">{text}</p>
         <time className="mt-1 text-xs text-gray-500">
           {format(timestamp, "HH:mm")}
         </time>
