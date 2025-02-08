@@ -3,6 +3,7 @@ import { useState } from "react";
 import { ChatMessage } from "@/components/chat/ChatMessage";
 import { ChatInput } from "@/components/chat/ChatInput";
 import { TypingIndicator } from "@/components/chat/TypingIndicator";
+import { supabase } from "@/integrations/supabase/client";
 
 interface Message {
   text: string;
@@ -31,18 +32,12 @@ const Index = () => {
     setIsTyping(true);
 
     try {
-      const response = await fetch('http://localhost:54321/functions/v1/chat', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ message: text }),
+      const { data, error } = await supabase.functions.invoke('chat', {
+        body: { message: text }
       });
 
-      const data = await response.json();
-
-      if (data.error) {
-        throw new Error(data.error);
+      if (error) {
+        throw error;
       }
 
       const aiMessage: Message = {
