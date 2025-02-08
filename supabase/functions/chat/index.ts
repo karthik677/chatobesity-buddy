@@ -36,20 +36,41 @@ serve(async (req) => {
     });
 
     const data = await response.json();
-    console.log('OpenAI response:', data); // Added for debugging
+    console.log('OpenAI response:', data);
 
     if (data.error) {
+      if (data.error.code === 'insufficient_quota') {
+        return new Response(
+          JSON.stringify({
+            error: "The AI service is currently unavailable due to high demand. Please try again later or contact support if the issue persists."
+          }),
+          {
+            status: 429,
+            headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+          }
+        );
+      }
       throw new Error(data.error.message || 'Error from OpenAI API');
     }
 
-    return new Response(JSON.stringify({ answer: data.choices[0].message.content }), {
-      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-    });
+    return new Response(
+      JSON.stringify({ answer: data.choices[0].message.content }), 
+      {
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      }
+    );
   } catch (error) {
     console.error('Error:', error);
-    return new Response(JSON.stringify({ error: error.message }), {
-      status: 500,
-      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-    });
+    const errorMessage = error.message.includes('quota') 
+      ? "The AI service is currently unavailable due to high demand. Please try again later or contact support if the issue persists."
+      : error.message;
+      
+    return new Response(
+      JSON.stringify({ error: errorMessage }), 
+      {
+        status: 500,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      }
+    );
   }
 });
