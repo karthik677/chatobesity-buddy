@@ -36,6 +36,12 @@ serve(async (req) => {
     });
 
     const data = await response.json();
+    console.log('OpenAI response:', data); // Added for debugging
+
+    if (data.error) {
+      throw new Error(data.error.message || 'Error from OpenAI API');
+    }
+
     return new Response(JSON.stringify({ answer: data.choices[0].message.content }), {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
     });
