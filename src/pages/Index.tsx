@@ -44,10 +44,10 @@ const Index = () => {
       <div className="container mx-auto px-4 py-20 sm:px-6 lg:px-8">
         <div className="text-center">
           <h1 className="animate-fade-in text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl md:text-6xl">
-            Your Personal{" "}
+            {" "}
             <span className="relative inline-block text-chat-mint">
               <span className="relative animate-slide-up">
-                Weight Management Assistant
+                WellnessBot
               </span>
               <span className="absolute bottom-0 left-0 h-1 w-full bg-chat-mint/30 animate-grow-width" />
             </span>
