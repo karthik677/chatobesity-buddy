@@ -117,7 +117,7 @@ const Chat = () => {
         <header className="relative mb-4 rounded-2xl bg-white p-6 shadow-sm transition-all duration-300 hover:shadow-md">
           <div className="absolute -left-2 top-1/2 h-8 w-2 -translate-y-1/2 rounded-r bg-chat-mint/80" />
           <h1 className="mb-2 text-2xl font-semibold text-gray-800">
-            Obesity Reduction Assistant
+           WellnessBot
           </h1>
           <p className="text-sm text-gray-600">
             Ask questions about weight management and healthy living
